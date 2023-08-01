@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SECR BRD/OPTG ROASTER</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datepickerjs@2.10.0/dist/datepicker.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FFD580;
+        }
+        
+        .a4-container {
+            background-color: #FFFFFF;
+            width: 210mm;
+            height: 297mm;
+            margin: 50px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .header-section h1 {
+            font-size: 16pt;
+            margin: 0;
+        }
+        
+        .header-img {
+            width: 100%;
+            max-width: 210mm;
+            max-height: 50mm;
+            margin-bottom: 20px;
+        }
+        
+        .header-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .date-section {
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #FFFFFF;
+            padding: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .date-section input[type="text"] {
+            font-family: "Calibri", sans-serif;
+            font-size: 14pt;
+            border: none;
+            outline: none;
+            width: 150px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        
+        .date-section button {
+            border: none;
+            background-color: #FFD580;
+            padding: 4px;
+            cursor: pointer;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th,
+        td {
+            border: 1px solid black;
+            width: auto;
+            height: 28px;
+            padding: 5px;
+            text-align: center;
+            font-family: "Calibri", sans-serif;
+            font-size: 12pt;
+            resize: both;
+            overflow: auto;
+        }
+        
+        th {
+            color: red;
+        }
+        
+        td[contenteditable="true"] {
+            color: black;
+        }
+        
+        .icon-button {
+            position: absolute;
+            top: 230px;
+            right: 230px;
+            font-size: 40px;
+            cursor: pointer;
+        }
+        
+        .download-button {
+            border: none;
+            background-color: #000F0F;
+            color: #FFFFFF;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            position: absolute;
+            top: 260px;
+            right: 200px;
+        }
+        
+        .footer {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        .footer a {
+            color: #000F0F;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-container">
+        <div class="header-img">
+            <img src="brd headline1.jpg" alt="Header">
+        </div>
+
+        <div class="header-section">
+            <h1>BRD/OPTG ROASTER</h1>
+            <div class="date-section">
+                <input type="text" id="datepicker" placeholder="            Click &lt;&lt;">
+                <button onclick="setTomorrowDate()">&lt;&lt;</button>
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <th contenteditable="true">1</th>
+                <th contenteditable="true">Column 2</th>
+                <th contenteditable="true">Column 3</th>
+                <th contenteditable="true">Column 4</th>
+                <th contenteditable="true">Column 5</th>
+                <th contenteditable="true">Column 6</th>
+            </tr>
+            <tr>
+                <th contenteditable="true">2</th>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+            <script>
+                for (let i = 3; i <= 21; i++) {
+                    document.write(`
+            <tr>
+              <th contenteditable="true">${i}</th>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+            </tr>
+          `);
+                }
+            </script>
+        </table>
+
+        <button class="download-button" id="printPreviewButton" onclick="openPrintPreview()">Done</button>
+
+        <div class="footer">
+            <p>Copyright© reserved. Designed and developed by <a href="https://github.com/harrxit" target="_blank" style="background-color:powderblue;">Harrxit</a></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/datepickerjs@2.10.0/dist/datepicker.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        const dateInput = document.getElementById("datepicker");
+        const datepicker = new Datepicker(dateInput);
+
+        function setTomorrowDate() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            const dd = String(tomorrow.getDate()).padStart(2, '0');
+            const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const yyyy = tomorrow.getFullYear();
+
+            const tomorrowDate = `${dd}/${mm}/${yyyy}`;
+            dateInput.value = tomorrowDate;
+        }
+
+        function openPrintPreview() {
+            window.print();
+        }
+    </script>
+</body>
+
+</html>
