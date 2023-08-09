@@ -149,24 +149,8 @@
         </div>
 
         <table>
-            <tr>
-                <th contenteditable="true">1</th>
-                <th contenteditable="true">Column 2</th>
-                <th contenteditable="true">Column 3</th>
-                <th contenteditable="true">Column 4</th>
-                <th contenteditable="true">Column 5</th>
-                <th contenteditable="true">Column 6</th>
-            </tr>
-            <tr>
-                <th contenteditable="true">2</th>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-            </tr>
             <script>
-                for (let i = 3; i <= 21; i++) {
+                for (let i = 1; i <= 21; i++) {
                     document.write(`
             <tr>
               <th contenteditable="true">${i}</th>
@@ -194,6 +178,8 @@
         const dateInput = document.getElementById("datepicker");
         const datepicker = new Datepicker(dateInput);
 
+        window.onload = loadSavedContent;
+
         function setTomorrowDate() {
             const today = new Date();
             const tomorrow = new Date(today);
@@ -207,10 +193,35 @@
             dateInput.value = tomorrowDate;
         }
 
+        function saveContent() {
+            const tableRows = document.querySelectorAll("tr[data-id]");
+            const content = {};
+
+            tableRows.forEach(row => {
+                const id = row.getAttribute("data-id");
+                const cells = row.querySelectorAll("td[contenteditable]");
+                const rowData = Array.from(cells).map(cell => cell.textContent);
+                content[id] = rowData;
+            });
+
+            // Send content to the server using AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "save_data.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(content));
+        }
+
+        function loadSavedContent() {
+            // Load content from the server using PHP and MySQL
+            // You'll need to fetch the data using a similar AJAX request and populate the table cells.
+        }
+
         function openPrintPreview() {
+            saveContent();
             window.print();
         }
     </script>
+
 </body>
 
 </html>
